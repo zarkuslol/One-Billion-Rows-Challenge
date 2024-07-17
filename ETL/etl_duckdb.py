@@ -21,7 +21,7 @@ def create_duckdb():
     result.show()
 
     # Saving the result in a .parquet file for future using
-    result.write_parquet('data\measurements.parque')
+    result.write_parquet('data\\measurements.parquet')
 
 # Main function
 if __name__ == "__main__":
