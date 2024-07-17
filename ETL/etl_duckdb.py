@@ -7,7 +7,7 @@ def create_duckdb():
     '''
     Select the station, its min, mean and max temperatures and group by the stations
     '''
-    duckdb.sql("""
+    result = duckdb.sql("""
         SELECT station,
             MIN(temperature) AS min_temperature,
             CAST(AVG(temperature) AS DECIMAL(3, 1)) AS mean_temperature,
@@ -15,7 +15,13 @@ def create_duckdb():
         FROM read_csv("data/measurements.txt", AUTO_DETECT=FALSE, sep=';', columns={'station':VARCHAR, 'temperature': 'DECIMAL(3, 1)'})
         GROUP BY station
         ORDER BY station
-    """).show()
+    """)
+
+    # Showing the result
+    result.show()
+
+    # Saving the result in a .parquet file for future using
+    result.write_parquet('data\measurements.parque')
 
 # Main function
 if __name__ == "__main__":
